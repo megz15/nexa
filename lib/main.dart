@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Nexa',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        brightness: Brightness.light,
+        primarySwatch: Colors.green,
+
       ),
       home: const MyHomePage(title: 'Nexa Chat'),
     );
@@ -37,7 +39,54 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: const Text('Nexa Chat'),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                // padding: const EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.spaceEvenly,
+                    spacing: 8.0,
+                    children: [
+                      Container(
+                        width: 160,
+                        child: ElevatedButton(
+                          child: Text('Connect to Server'),
+                          onPressed: (){},
+                        ),
+                      ),
+                      Container(
+                        width: 160,
+                        child: ElevatedButton(
+                          child: Text('Emit Test Message'),
+                          onPressed: (){},
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Expanded(
+            child: Center(child: Text('chatbox')),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                suffixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.send))
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
