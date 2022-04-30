@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nexa/theme_switch.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(currentThemeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nexa',
-      themeMode: ThemeMode.light,
+      themeMode: themeMode,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.orange,
@@ -26,25 +29,30 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final currentTheme = ref.watch(currentThemeProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
           IconButton(
             onPressed: () {
-              print('theme changed');
+              if (currentTheme == ThemeMode.dark) {
+                ref.read(currentThemeProvider.state).state = ThemeMode.light;
+              } else {
+                ref.read(currentThemeProvider.state).state = ThemeMode.dark;
+              }
             },
             icon: Icon(Icons.wb_sunny_rounded),
           ),
