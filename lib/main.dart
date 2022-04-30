@@ -12,10 +12,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nexa',
+      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.orange,
+      ),
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.green,
-
       ),
       home: const MyHomePage(title: 'Nexa Chat'),
     );
@@ -32,12 +36,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              print('theme changed');
+            },
+            icon: Icon(Icons.wb_sunny_rounded),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,14 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 160,
                         child: ElevatedButton(
                           child: Text('Connect to Server'),
-                          onPressed: (){},
+                          onPressed: () {},
                         ),
                       ),
                       Container(
                         width: 160,
                         child: ElevatedButton(
                           child: Text('Emit Test Message'),
-                          onPressed: (){},
+                          onPressed: () {},
                         ),
                       )
                     ],
@@ -79,10 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.send))
-              ),
+              decoration: InputDecoration(border: OutlineInputBorder(), suffixIcon: IconButton(onPressed: () {}, icon: Icon(Icons.send))),
             ),
           ),
         ],
